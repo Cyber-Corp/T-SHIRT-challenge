@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_DB: testdb
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  app:
+    build: .
+    command: sh -c "node src/db/migrate.js && node src/db/seed.js && node src/index.js"
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - '3000:3000'
+    environment:
+      - DATABASE_URL=postgresql://testuser:testpass@db:5432/testdb
+      - PORT=3000
+    depends_on:
+      - db
+volumes:
+  pgdata:
