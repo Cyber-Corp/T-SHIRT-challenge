@@ -5,7 +5,7 @@ const checkImageVisibility = () => {
   cy.get('[data-cy="image-grid"]').should('exist').and('be.visible');
 };
 
-describe('Product Validation End-to-End', () => {
+describe('Image Upload End-to-End', () => {
   it('validates product data across API, Product List, and Upload Page', () => {
     // 1. Request API to get initial data
     cy.request('/api/items').then((response) => {
