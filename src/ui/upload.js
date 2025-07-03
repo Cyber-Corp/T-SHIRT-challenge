@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('app').innerHTML = '<p>Item not found.</p>';
     return;
   }
-  document.getElementById('item-info').innerHTML = `<b>Item ID:</b> ${item.id} <b>Name:</b> ${item.name}`;
+  document.getElementById('item-info').innerHTML = `<b data-cy='item_id'>Item ID:</b> ${item.id} <b data-cy='item_name'>Name:</b> ${item.name}`;
   // Fetch configurations and images
   const { configurations, images } = await fetch(`/api/items/${itemId}/configurations`).then(r => r.json());
 
@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   colors.forEach(color => {
     const th = document.createElement('th');
     th.textContent = color;
+    th.setAttribute('data-cy', 'color-header');
     headRow.appendChild(th);
   });
   thead.appendChild(headRow);
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const row = document.createElement('tr');
     const fabricCell = document.createElement('th');
     fabricCell.textContent = fabric;
+    fabricCell.setAttribute('data-cy', 'fabric-header');
     row.appendChild(fabricCell);
     colors.forEach(color => {
       const cell = document.createElement('td');
@@ -50,6 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const imgs = images.filter(img => img.item_configuration_id === config.config_id);
         const imgGrid = document.createElement('div');
         imgGrid.className = 'img-grid';
+        imgGrid.setAttribute('data-cy', 'image-grid');
         imgs.forEach(img => {
           const imgBox = document.createElement('div');
           imgBox.className = 'img-box';
@@ -63,6 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Add button
         const addBtn = document.createElement('button');
         addBtn.textContent = 'Add';
+        addBtn.setAttribute('data-cy', `add-btn-${color.toLowerCase()}-${fabric.toLowerCase()}`);
         addBtn.onclick = () => showAddPopup(config.config_id);
         cell.appendChild(addBtn);
       } else {
@@ -88,12 +92,12 @@ function showAddPopup(configId) {
   const popup = document.createElement('div');
   popup.className = 'popup';
   popup.innerHTML = `
-    <div class="popup-content">
+    <div class="popup-content" data-cy="popup-content">
       <h2>Upload Image</h2>
       <form id="upload-form">
         <input type="file" name="image" accept="image/*" required />
         <input type="hidden" name="configId" value="${configId}" />
-        <button type="submit">Upload</button>
+        <button type="submit" data-cy="upload-button">Upload</button>
         <button type="button" onclick="this.closest('.popup').remove()">Cancel</button>
       </form>
     </div>
