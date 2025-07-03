@@ -7,12 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
       items.forEach(item => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${item.id.toString().padStart(3, '0')}</td>
-          <td>${item.name}</td>
-          <td>${item.color_count}</td>
-          <td>${item.fabric_count}</td>
-          <td>${item.image_count}</td>
-          <td><button onclick="window.location.href='upload.html?itemId=${item.id}'">Edit images</button></td>
+          <td data-cy="item-id-${item.id}">${item.id.toString().padStart(3, '0')}</td>
+          <td data-cy="shirt-type-${item.id}">${item.name}</td>
+          <td data-cy="color-count-${item.id}">${item.color_count}</td>
+          <td data-cy="fabric-count-${item.id}">${item.fabric_count}</td>
+          <td data-cy='n-images-on-id-${item.id}'>${item.image_count}</td>
+          <td><button data-cy='edit-images-bttn-${item.id}' onclick="window.location.href='upload.html?itemId=${item.id}'">Edit images</button></td>
         `;
         tbody.appendChild(tr);
       });

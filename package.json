@@ -17,6 +17,7 @@
     "pg": "^8.16.2"
   },
   "devDependencies": {
-    "cypress": "^14.5.1"
+    "cypress": "^14.5.1",
+    "cypress-file-upload": "^5.0.8"
   }
 }
